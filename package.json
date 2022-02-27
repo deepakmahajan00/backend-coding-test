@@ -10,7 +10,8 @@
     "test": "nyc --reporter=html --reporter=text mocha tests",
     "start": "node index.js ts-node ./src/index.ts",
     "lint": "eslint ./src --fix",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "eslint": "^8.10.0",
+    "husky": "^7.0.4",
     "mocha": "^6.1.4",
     "nyc": "^15.1.0",
     "supertest": "^4.0.2",

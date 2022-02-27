@@ -100,21 +100,23 @@ module.exports = (db) => {
     });
 
     app.get('/rides/:id', async (req, res) => {
-        try {
-            const rows = await db.all('SELECT * FROM Rides WHERE rideID=?', [req.params.id]);
+        await db.all(`SELECT * FROM Rides WHERE rideID='${req.params.id}'`, function (err, rows) {
+            if (err) {
+                return res.send({
+                    error_code: 'SERVER_ERROR',
+                    message: 'Unknown error'
+                });
+            }
+
             if (rows.length === 0) {
                 return res.send({
                     error_code: 'RIDES_NOT_FOUND_ERROR',
                     message: 'Could not find any rides'
                 });
             }
+
             res.send(rows);
-        } catch (error) {
-            return res.send({
-                error_code: 'SERVER_ERROR',
-                message: 'Unknown error'
-            });
-        }
+        });
     });
 
     return app;

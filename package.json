@@ -8,7 +8,22 @@
   },
   "scripts": {
     "test": "nyc --reporter=html --reporter=text mocha tests",
-    "start": "node index.js"
+    "start": "node index.js ts-node ./src/index.ts",
+    "lint": "eslint ./src --fix",
+    "tsc": "tsc"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run test",
+      "pre-commit": "npm run lint"
+    }
+  },
+  "nyc": {
+    "check-coverage": true,
+    "branches": 80,
+    "lines": 80,
+    "functions": 80,
+    "statements": 80
   },
   "keywords": [
     "Xendit"
@@ -25,6 +40,8 @@
     "eslint": "^8.10.0",
     "mocha": "^6.1.4",
     "nyc": "^15.1.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
   }
 }

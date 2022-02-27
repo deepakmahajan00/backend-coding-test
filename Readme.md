@@ -53,6 +53,12 @@ Please implement the following tooling:
         2. npm init @eslint/config
         3. npx eslint src/*
     2. `nyc` should aim for test coverage of `80%` across lines, statements, and branches
+        1. npm i nyc --save-dev
+        2. "scripts": {
+                "test": "nyc --reporter=html --reporter=text mocha tests",
+                "start": "node index.js"
+            },
+        3. npm test
     3. `pre-push` should run the tests before allowing pushing using `git`
     4. `winston` should be used to replace console logs and all errors should be logged as well. Logs should go to disk.
 2. Ensure that tooling is connected to `npm test`

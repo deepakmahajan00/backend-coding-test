@@ -96,7 +96,6 @@ module.exports = (db) => {
                     message: 'Could not find any rides'
                 });
             }
-
             res.send(rows);
         });
     });

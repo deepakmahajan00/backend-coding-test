@@ -1,34 +1,247 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "description": "This is the developer documentation for project.",
-      "version": "1.0.0",
-      "title": "Project Documentaion"
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the developer documentation backend-coding-test project",
+    "version": "1.0.0",
+    "title": "Documentation for Backend Coding Test"
+  },
+  "host": "localhost:8010",
+  "tags": [
+    {
+      "name": "rides",
+      "description": "Storing and Retrieving of rides data"
     },
-    "host": "localhost:8010",
-    "tags": [
-      {
-        "name": "health",
-        "description": "Check the server health"
+    {
+      "name": "health",
+      "description": "Check the health of service"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Simple call to check heath of service",
+        "responses": {
+          "200": {
+            "description": "Successful call"
+          }
+        }
       }
-    ],
-    "schemes": [
-      "http"
-    ],
-    "paths": {
-      "/health": {
-        "get": {
-          "tags": [
-            "health"
-          ],
-          "summary": "Simple call to check the server health",
-          "responses": {
-            "200": {
-              "description": "Successful call"
+    },
+    "/rides": {
+      "post": {
+        "tags": [
+          "rides"
+        ],
+        "summary": "Create a new ride data in the database and fetch the newly added rider",
+        "description": "",
+        "operationId": "createRider",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Rides information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RidesRequest"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rides creation is successful"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "rides"
+        ],
+        "summary": "Fetch all rides in the database",
+        "operationId": "getAllRides",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/GetRidesResponse"
+            }
+          },
+          "404": {
+            "description": "Could not find any rides"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/rides/{rideId}": {
+      "get": {
+        "tags": [
+          "rides"
+        ],
+        "summary": "Find ride by ID",
+        "description": "Returns a ride based on ID",
+        "operationId": "getRideById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "rideId",
+            "in": "path",
+            "description": "ID of ride to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/RidesResponse"
+            }
+          },
+          "404": {
+            "description": "Rides not found"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     }
-    
+  },
+  "definitions": {
+    "RidesRequest": {
+      "type": "object",
+      "properties": {
+        "start_long": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The initial longitude of the ride"
+        },
+        "start_lat": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The initial latitude of the ride"
+        },
+        "end_long": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The final longitude of the ride"
+        },
+        "end_lat": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The final latitude of the ride"
+        },
+        "rider_name": {
+          "type": "string",
+          "description": "The name of the rider"
+        },
+        "driver_name": {
+          "type": "string",
+          "description": "The name of the rider"
+        },
+        "driver_vehicle": {
+          "type": "string",
+          "description": "The name of the rider"
+        }
+      }
+    },
+    "RidesResponse": {
+      "type": "object",
+      "properties": {
+        "rideID": {
+          "type": "string",
+          "description": "The unique identifier of rides"
+        },
+        "startLong": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The initial longitude of the ride"
+        },
+        "startLat": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The initial latitude of the ride"
+        },
+        "endLong": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The final longitude of the ride"
+        },
+        "endLat": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The final latitude of the ride"
+        },
+        "riderName": {
+          "type": "string",
+          "description": "The name of the rider"
+        },
+        "driverName": {
+          "type": "string",
+          "description": "The name of the rider"
+        },
+        "driverVehicle": {
+          "type": "string",
+          "description": "The name of the rider"
+        }
+      }
+    },
+    "GetRidesResponse": {
+      "type": "object",
+      "properties": {
+        "totalItems": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Total number of rides in the database"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Total number of pages with the given query"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Total current page of the data"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Maximum number of rides per page"
+        },
+        "data": {
+          "schema": {
+            "$ref": "#/definitions/RidesResponse"
+          },
+          "description": "Array of rides data"
+        }
+      }
+    }
   }
+}

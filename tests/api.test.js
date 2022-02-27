@@ -30,29 +30,76 @@ describe('API tests', () => {
         });
     });
 
+  
+    describe('GET /rides/{id}', () => {
+      it('Endpoint should be available', (done) => {
+          request(app)
+            .get('/rides/{id}')
+            .expect(200, done);
+      });
+    });
+
+    describe('POST /rides', () => {
+      it('Endpoint should be available', (done) => {
+          request(app)
+            .post('/rides')
+            .expect(200, done);
+      });
+
+      it('should create new ride', (done) => {
+        request(app)
+            .post('/rides')
+            .send({
+                start_lat: 80,
+                start_long: 80,
+                end_lat: 80,
+                end_long: 80,
+                rider_name: 'John Doe',
+                driver_name: 'Richard',
+                driver_vehicle: 'Car',
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err);
+                assert.equal(res.body[0].rideID, 26);
+                assert.ok(res.body[0].created);
+                done();
+            });
+    });
+    });
+
     describe('GET /rides', () => {
-        it('Endpoint should be available', (done) => {
-            request(app)
-              .get('/rides')
-              .expect(200, done);
-        });
+      it('Endpoint should be available', (done) => {
+        request(app)
+          .get('/rides')
+          .expect(200, done);
       });
 
-      describe('GET /rides/{id}', () => {
-        it('Endpoint should be available', (done) => {
-            request(app)
-              .get('/rides/{id}')
-              .expect(200, done);
-        });
+      it('should return default 10 rows', (done) => {
+          request(app)
+              .get('/rides?page=1')
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                  if (err) return done(err);
+                  assert.equal(res.body.length, 10);
+                  done();
+              });
       });
 
-      describe('POST /rides', () => {
-        it('Endpoint should be available', (done) => {
-            request(app)
-              .post('/rides')
-              .expect(200, done);
-        });
+      it('should return limit 5 rows', (done) => {
+          request(app)
+              .get('/rides?page=1&limit=5')
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                  if (err) return done(err);
+                  assert.equal(res.body.length, 5);
+                  done();
+              });
       });
+    });
 });
 
 

@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha tests",
+    "test": "nyc --reporter=html --reporter=text mocha tests",
     "start": "node index.js"
   },
   "keywords": [
@@ -24,6 +24,7 @@
   "devDependencies": {
     "eslint": "^8.10.0",
     "mocha": "^6.1.4",
+    "nyc": "^15.1.0",
     "supertest": "^4.0.2"
   }
 }

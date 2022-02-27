@@ -29,4 +29,34 @@ describe('API tests', () => {
                 .expect(200, done);
         });
     });
+
+    describe('GET /rides', () => {
+        it('Endpoint should be available', (done) => {
+            request(app)
+              .get('/rides')
+              .expect(200, done);
+        });
+      });
+
+      describe('GET /rides/{id}', () => {
+        it('Endpoint should be available', (done) => {
+            request(app)
+              .get('/rides/{id}')
+              .expect(200, done);
+        });
+      });
+
+      describe('POST /rides', () => {
+        it('Endpoint should be available', (done) => {
+            request(app)
+              .post('/rides')
+              .expect(200, done);
+        });
+      });
 });
+
+
+
+  
+
+  

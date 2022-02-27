@@ -49,6 +49,9 @@ Please implement the following tooling:
 
 1. Create a pull request against `master` of your fork with the new tooling and merge it
     1. `eslint` should have an opinionated format
+        1. npm install eslint --save-dev
+        2. npm init @eslint/config
+        3. npx eslint src/*
     2. `nyc` should aim for test coverage of `80%` across lines, statements, and branches
     3. `pre-push` should run the tests before allowing pushing using `git`
     4. `winston` should be used to replace console logs and all errors should be logged as well. Logs should go to disk.

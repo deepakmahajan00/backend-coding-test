@@ -109,7 +109,7 @@ Please implement the following security controls for your system:
 Please implement load testing to ensure your service can handle a high amount of traffic
 
 #### Success Criteria
-
+**[Run]** artillery run artillery.yml
 1. Implement load testing using `artillery`
     1. Create a PR against `master` of your fork including artillery
     2. Ensure that load testing is able to be run using `npm test:load`. You can consider using a tool like `forever` to spin up a daemon and kill it after the load test has completed.

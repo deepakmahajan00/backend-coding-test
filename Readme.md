@@ -33,8 +33,7 @@ Please deliver documentation of the server that clearly explains the goals of th
 
 #### Instruction to install documentation
 
-1. run npm i swagger-ui-express -S
-2. check http://localhost:8010/api-docs/
+1. http://localhost:8010/api-docs/
 
 ### Implement Tooling
 

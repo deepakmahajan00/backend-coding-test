@@ -1,0 +1,20 @@
+'use strict';
+
+const ERROR_CODE = {
+    VALIDATION_ERROR: 'VALIDATION_ERROR',
+    SERVER_ERROR: 'SERVER_ERROR',
+    RIDES_NOT_FOUND: 'RIDES_NOT_FOUND_ERROR',
+  };
+
+const HTTP_CODE = {
+    VALIDATION_ERROR: 400,
+    SERVER_ERROR: 500,
+    NOT_FOUND: 404,
+    SUCCESSFUL: 200,
+    CREATED: 201,
+};
+
+module.exports = {
+    HTTP_CODE,
+    ERROR_CODE,
+};

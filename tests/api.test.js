@@ -79,18 +79,12 @@ describe('API tests', () => {
 
   
     describe('GET /rides/{id}', () => {
-      it('Endpoint should be available', (done) => {
-          request(app)
-            .get('/rides/{id}')
-            .expect(constant.HTTP_CODE.SUCCESSFUL, done);
-      });
-
       it('should return not found', (done) => {
         request(app)
             .get('/rides/99')
+            .expect(constant.HTTP_CODE.NOT_FOUND)
             .expect((res) => {
               assert.strictEqual(res.body.error_code, constant.ERROR_CODE.RIDES_NOT_FOUND);
-              assert.strictEqual(res.body.status, constant.HTTP_CODE.NOT_FOUND);
             })
             .end(done);
       });
@@ -103,7 +97,6 @@ describe('API tests', () => {
             .then((res) => {
               request(app)
                   .get(`/rides/${res.body.rideID}`)
-                  .expect(constant.HTTP_CODE.SUCCESSFUL)
                   .expect((getResponse) => {
                     assert.strictEqual(getResponse.body.rideID, res.body.rideID);
                   })
@@ -137,9 +130,9 @@ describe('API tests', () => {
                 .post('/rides')
                 .send(getPostRideInvalidData(200, 200, 110, 75))
                 .set('Content-Type', 'application/json')
+                .expect(constant.HTTP_CODE.VALIDATION_ERROR)
                 .expect((res) => {
                   assert.strictEqual(res.body.error_code, constant.ERROR_CODE.VALIDATION_ERROR);
-                  assert.strictEqual(res.body.status, constant.HTTP_CODE.VALIDATION_ERROR);
                 })
                 .end(done);
           });
@@ -149,9 +142,9 @@ describe('API tests', () => {
                 .post('/rides')
                 .send(getPostRideInvalidData(100, 70, 200, 200))
                 .set('Content-Type', 'application/json')
+                .expect(constant.HTTP_CODE.VALIDATION_ERROR)
                 .expect((res) => {
                   assert.strictEqual(res.body.error_code, constant.ERROR_CODE.VALIDATION_ERROR);
-                  assert.strictEqual(res.body.status, constant.HTTP_CODE.VALIDATION_ERROR);
                 })
                 .end(done);
           });
@@ -161,9 +154,9 @@ describe('API tests', () => {
                 .post('/rides')
                 .send(getPostRideInvalidData(100, 70, 200, 200, ''))
                 .set('Content-Type', 'application/json')
+                .expect(constant.HTTP_CODE.VALIDATION_ERROR)
                 .expect((res) => {
                   assert.strictEqual(res.body.error_code, constant.ERROR_CODE.VALIDATION_ERROR);
-                  assert.strictEqual(res.body.status, constant.HTTP_CODE.VALIDATION_ERROR);
                 })
                 .end(done);
           });
@@ -173,9 +166,9 @@ describe('API tests', () => {
                 .post('/rides')
                 .send(getPostRideInvalidData(100, 70, 200, 200, 'Rider', ''))
                 .set('Content-Type', 'application/json')
+                .expect(constant.HTTP_CODE.VALIDATION_ERROR)
                 .expect((res) => {
                   assert.strictEqual(res.body.error_code, constant.ERROR_CODE.VALIDATION_ERROR);
-                  assert.strictEqual(res.body.status, constant.HTTP_CODE.VALIDATION_ERROR);
                 })
                 .end(done);
           });
@@ -185,9 +178,9 @@ describe('API tests', () => {
                 .post('/rides')
                 .send(getPostRideInvalidData(100, 70, 200, 200, 'Rider', 'Driver', ''))
                 .set('Content-Type', 'application/json')
+                .expect(constant.HTTP_CODE.VALIDATION_ERROR)
                 .expect((res) => {
                   assert.strictEqual(res.body.error_code, constant.ERROR_CODE.VALIDATION_ERROR);
-                  assert.strictEqual(res.body.status, constant.HTTP_CODE.VALIDATION_ERROR);
                 })
                 .end(done);
           });
@@ -200,8 +193,7 @@ describe('API tests', () => {
                 .expect('Content-Type', /json/)
                 .expect(constant.HTTP_CODE.SUCCESSFUL, done);
         });
-
-      });
+    });
 });
 
 
